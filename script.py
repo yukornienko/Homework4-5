@@ -78,13 +78,14 @@ class Graph:
             for node in self.vertices.keys():
                 for in_edge in self.vertices[node].in_edges:
                     self.G.add_node(in_edge, label = str(self.vertices[in_edge].seq))
-                    self.G.add_edge(in_edge, node, label = (str(self.vertices[in_edge].seq[-1]) + str(self.vertices[node].seq)))
+                    self.G.add_edge(in_edge, node, label = (str(self.vertices[in_edge].seq) + str(self.vertices[node].seq[-1])))
                 for out_edge in self.vertices[node].out_edges:
                     self.G.add_node(out_edge, label = str(self.vertices[out_edge].seq))  
-                    self.G.add_edge(node, out_edge, label = (str(self.vertices[node].seq[-1]) + str(self.vertices[out_edge].seq)))
-        
-        self.G.layout()
-        self.G.draw(output_name, format='png', prog='dot')
+                    self.G.add_edge(node, out_edge, label = (str(self.vertices[node].seq) + str(self.vertices[out_edge].seq[-1])))
+   
+        #self.G.layout()
+        #self.G.draw(output_name, format='png', prog='dot')
+        self.G.write(output_name)
         
 k = 15
     
@@ -105,4 +106,6 @@ with open("/Users/yukornienko/Downloads/BI_spring_2018/Python/hw_4_5_dataset.fas
         for e in my_graph.vertices[v].in_edges:
             print('-> In edge: {}'.format(e))    
   
-my_graph.visualize("short", "/Users/yukornienko/Downloads/BI_spring_2018/Python/HW4_short_15.png")
+my_graph.visualize("short", "/Users/yukornienko/Downloads/BI_spring_2018/Python/HW4_short_15.dot")
+my_graph.visualize("full", "/Users/yukornienko/Downloads/BI_spring_2018/Python/HW4_full_15.dot")
+
