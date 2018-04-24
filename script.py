@@ -69,24 +69,24 @@ class Graph:
         if fullness == "short":
             for node in self.vertices.keys():
                 for in_edge in self.vertices[node].in_edges:
-                    for out_edge in self.vertices[node].out_edges:
-                        self.G.add_node(out_edge, label = str(self.vertices[out_edge].coverage))
-                        self.G.add_node(in_edge, label = str(self.vertices[in_edge].coverage))
-                        self.G.add_edge(in_edge, node, label = "Len=" + str(len(self.vertices[in_edge].seq[-1] + self.vertices[node].seq) - k + 1) + ",Cov= " + str((self.vertices[in_edge].coverage + self.vertices[node].coverage)/2))
-                        self.G.add_edge(node, out_edge, label = "Len=" + str(len(self.vertices[node].seq[-1] + self.vertices[out_edge].seq) - k + 1) + ",Cov= " + str((self.vertices[node].coverage + self.vertices[out_edge].coverage)/2))
+                    self.G.add_node(in_edge, label = str(self.vertices[in_edge].coverage))
+                    self.G.add_edge(in_edge, node, label = "Len=" + str(len(self.vertices[in_edge].seq[-1] + self.vertices[node].seq) - k + 1) + ",Cov= " + str((self.vertices[in_edge].coverage + self.vertices[node].coverage)/2))
+                for out_edge in self.vertices[node].out_edges:
+                    self.G.add_node(out_edge, label = str(self.vertices[out_edge].coverage))
+                    self.G.add_edge(node, out_edge, label = "Len=" + str(len(self.vertices[node].seq[-1] + self.vertices[out_edge].seq) - k + 1) + ",Cov= " + str((self.vertices[node].coverage + self.vertices[out_edge].coverage)/2))
         else:
             for node in self.vertices.keys():
                 for in_edge in self.vertices[node].in_edges:
-                    for out_edge in self.vertices[node].out_edges:
-                        self.G.add_node(out_edge, label = str(self.vertices[out_edge].seq))
-                        self.G.add_node(in_edge, label = str(self.vertices[in_edge].seq))
-                        self.G.add_edge(in_edge, node, label = (str(self.vertices[in_edge].seq[-1]) + str(self.vertices[node].seq)))
-                        self.G.add_edge(node, out_edge, label = (str(self.vertices[node].seq[-1]) + str(self.vertices[out_edge].seq)))
-   
+                    self.G.add_node(in_edge, label = str(self.vertices[in_edge].seq))
+                    self.G.add_edge(in_edge, node, label = (str(self.vertices[in_edge].seq[-1]) + str(self.vertices[node].seq)))
+                for out_edge in self.vertices[node].out_edges:
+                    self.G.add_node(out_edge, label = str(self.vertices[out_edge].seq))  
+                    self.G.add_edge(node, out_edge, label = (str(self.vertices[node].seq[-1]) + str(self.vertices[out_edge].seq)))
+        
         self.G.layout()
         self.G.draw(output_name, format='png', prog='dot')
         
- k = 15
+k = 15
     
 my_graph = Graph(k)
     
