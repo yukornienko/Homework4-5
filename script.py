@@ -143,24 +143,23 @@ k = 15
     
 my_graph = Graph(k)
     
-with open("/Users/yukornienko/Downloads/BI_spring_2018/Python/hw_4_5_dataset.fasta", "r") as handle:
+with open("/hw4_5_100.fa", "r") as handle:
     for record in SeqIO.parse(handle, "fasta"):
         read = str(record.seq)
         my_graph.add_read(read)
         #my_graph.add_read( str(record.reverse_complement().seq) )
 
     my_graph.calc_init_edge_coverage()
-    
+    my_graph.visualize("full", "/hw_5_15full.dot")
+    my_graph.visualize("short", "/hw_5_15short.dot")   
     for v in my_graph.vertices:
         print('Vertex: {}, coverage: {}'.format(v,my_graph.vertices[v].coverage))
         for e in my_graph.vertices[v].out_edges:
             print('-> Out edge: {}'.format(e))
         for e in my_graph.vertices[v].in_edges:
-            print('-> In edge: {}'.format(e))    
-  
-my_graph.visualize("short", "/HW4_short_15.dot")
-my_graph.visualize("full", "/HW4_full_15.dot")
-my_graph.compress()
-my_graph.visualize("full", "/hw_5_compressed_15full.dot")
-my_graph.visualize("short", "/hw_5_compressed_15short.dot")
+            print('-> In edge: {}'.format(e)) 
+    my_graph.compress()
+    my_graph.calc_init_edge_coverage()
+    my_graph.visualize("full", "/hw_5_compressed_15full.dot")
+    my_graph.visualize("short", "/hw_5_comressed_15short.dot")
 
