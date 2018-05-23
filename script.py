@@ -78,7 +78,7 @@ class Graph:
             for node in self.vertices.keys():
                 for in_edge in self.vertices[node].in_edges:
                     self.G.add_node(in_edge, label = str(self.vertices[in_edge].seq))
-                    self.G.add_edge(in_edge, node, label = (str(self.vertices[in_edge].seq) + str(self.vertices[node].seq[(len(self.vertices[node].seq)-2)::])))
+                    self.G.add_edge(in_edge, node, label = (str(self.vertices[in_edge].seq) + str(self.vertices[node].seq[self.k-1:])))
                 for out_edge in self.vertices[node].out_edges:
                     self.G.add_node(out_edge, label = str(self.vertices[out_edge].seq))  
                     self.G.add_edge(node, out_edge, label = (str(self.vertices[node].seq) + str(self.vertices[out_edge].seq[-1])))
